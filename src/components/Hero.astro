@@ -1,0 +1,88 @@
+---
+import Logo from "./Logo.astro";
+
+const tagline = "This is where the hustle meets the horizon";
+const words = tagline.split(" ");
+---
+
+<section
+  data-section="hero"
+  data-hero
+  class="relative min-h-screen overflow-hidden"
+>
+  <div
+    data-hero-logo-wrap
+    class="absolute left-1/2 top-[40%] z-10 w-[clamp(320px,30vw,480px)] -translate-x-1/2 -translate-y-1/2"
+  >
+    <Logo class="h-auto w-full" splitTargets={true} />
+  </div>
+
+  <h2
+    data-hero-tagline
+    class="absolute inset-x-0 top-[55%] z-10 mx-auto max-w-[min(1000px,92vw)] px-6 text-center font-display leading-[1.1] text-ink"
+    style="font-size:clamp(40px,5vw,72px);"
+  >
+    {
+      words.map((word, i) => {
+        const isLast = i === words.length - 1;
+        return (
+          <span class="inline-block overflow-hidden align-baseline">
+            <span data-hero-tagline-word class="inline-block will-change-transform">
+              {word}
+              {!isLast && <>&nbsp;</>}
+            </span>
+          </span>
+        );
+      })
+    }<span class="inline-block overflow-hidden align-baseline"><span data-hero-tagline-word class="inline-block text-th-burnt-ochre will-change-transform">.</span></span>
+  </h2>
+
+  <div
+    data-hero-scroll-cue
+    class="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2"
+    aria-hidden="true"
+  >
+    <span class="text-[12px] uppercase tracking-[0.18em] text-ink-mute">scroll</span>
+    <svg
+      class="hero-chevron-bob"
+      width="8"
+      height="12"
+      viewBox="0 0 8 12"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.25"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="color: var(--color-ink-mute);"
+    >
+      <path d="M1 3 L4 9 L7 3" />
+    </svg>
+  </div>
+</section>
+
+<style>
+  @keyframes hero-chevron-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(6px);
+    }
+  }
+
+  .hero-chevron-bob {
+    animation: hero-chevron-bob 2s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-chevron-bob {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { initHero } from "../scripts/hero";
+  initHero();
+</script>

@@ -1,0 +1,47 @@
+---
+import rawSvg from "../assets/topography-hero-band.svg?raw";
+
+const innerMatch = rawSvg.match(/<svg[^>]*>([\s\S]*?)<\/svg>\s*$/);
+const rawInner = innerMatch ? innerMatch[1] : "";
+const inner = rawInner.replace(/<path /g, "<path data-ground-path ");
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 360"
+  preserveAspectRatio="xMidYMid slice"
+  fill="none"
+  stroke="#111111"
+  stroke-width="1.0"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  data-ground-topography
+  class="ground-topography"
+  style="opacity: 0;"
+  set:html={inner}
+/>
+
+<style>
+  .ground-topography {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .ground-topography :global(g) {
+    stroke: inherit;
+    stroke-width: inherit;
+    fill: none;
+  }
+
+  .ground-topography :global(path) {
+    stroke: inherit;
+    stroke-width: inherit;
+    vector-effect: non-scaling-stroke;
+  }
+</style>

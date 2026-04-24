@@ -1,0 +1,41 @@
+---
+const subline =
+  "We're building Trail Hustle the same way we'd ask anyone to build themselves — slowly, deliberately, and in good company.";
+---
+
+<section
+  data-section="horizon"
+  data-horizon
+  class="horizon relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center"
+>
+  <h2
+    data-horizon-line1
+    class="horizon-line1 font-display leading-[1.05] tracking-tight text-ink"
+  >
+    Built, not granted<span class="text-th-burnt-ochre">.</span>
+  </h2>
+  <p
+    data-horizon-line2
+    class="horizon-line2 mx-auto mt-4 font-body text-ink-mute"
+  >
+    {subline}
+  </p>
+</section>
+
+<style>
+  .horizon-line1 {
+    font-size: clamp(44px, 6vw, 88px);
+    margin: 0;
+  }
+
+  .horizon-line2 {
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+</style>
+
+<script>
+  import { initHorizon } from "../scripts/horizon";
+  initHorizon();
+</script>

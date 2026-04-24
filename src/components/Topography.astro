@@ -1,0 +1,77 @@
+---
+import rawSvg from "../assets/topography-hero-band.svg?raw";
+
+interface Props {
+  stroke?: string;
+  strokeWidth?: number;
+  opacity?: number;
+  animated?: boolean;
+  class?: string;
+  preserveAspectRatio?: string;
+}
+
+const {
+  stroke = "#D9D3C8",
+  strokeWidth = 1,
+  opacity = 0.9,
+  animated = false,
+  class: className = "",
+  preserveAspectRatio = "xMidYMid meet",
+} = Astro.props;
+
+const innerMatch = rawSvg.match(/<svg[^>]*>([\s\S]*?)<\/svg>\s*$/);
+const inner = innerMatch ? innerMatch[1] : "";
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1200 360"
+  preserveAspectRatio={preserveAspectRatio}
+  fill="none"
+  stroke={stroke}
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  style={`opacity:${opacity};`}
+  data-topography
+  data-animated={animated ? "true" : "false"}
+  class={`topography ${className}`}
+  set:html={inner}
+/>
+
+<style>
+  .topography :global(g) {
+    stroke: inherit;
+    stroke-width: inherit;
+    fill: none;
+  }
+
+  .topography :global(path) {
+    stroke: inherit;
+    stroke-width: inherit;
+    vector-effect: non-scaling-stroke;
+  }
+</style>
+
+{
+  animated && (
+    <script>
+      {`
+        (() => {
+          const els = document.querySelectorAll('svg[data-topography][data-animated="true"]');
+          els.forEach((svg) => {
+            if (svg.dataset.prepared === 'true') return;
+            svg.querySelectorAll('path').forEach((p) => {
+              try {
+                const len = p.getTotalLength();
+                p.style.strokeDasharray = String(len);
+                p.style.strokeDashoffset = String(len);
+              } catch (_) {}
+            });
+            svg.dataset.prepared = 'true';
+          });
+        })();
+      `}
+    </script>
+  )
+}

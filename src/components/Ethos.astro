@@ -1,0 +1,83 @@
+---
+const lines = [
+  "Trail Hustle is where people come",
+  "to find out what they're capable of,",
+  "in the company of others",
+  "asking the same.",
+  "It is not about stepping away from ambition.",
+  "It is about stepping into something deeper.",
+  "We move hard, think big,",
+  "and breathe in what matters.",
+];
+---
+
+<section
+  data-section="ethos"
+  data-ethos
+  class="ethos relative"
+>
+  <div
+    data-ethos-pin
+    class="ethos-pin relative flex h-screen items-center justify-center overflow-hidden"
+  >
+    <div
+      data-ethos-stack
+      class="ethos-stack relative z-10 mx-auto w-[min(1100px,92vw)] px-6"
+    >
+      {
+        lines.map((line) => (
+          <p
+            data-ethos-line
+            class="ethos-line font-display leading-[1.15] tracking-tight text-ink"
+            style="font-size: clamp(32px, 5vw, 58px);"
+          >
+            {line}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .ethos {
+    min-height: 400vh;
+  }
+
+  .ethos-line {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0;
+    will-change: opacity, transform, filter;
+  }
+
+  .ethos.ethos-reduce {
+    min-height: auto;
+  }
+
+  .ethos.ethos-reduce .ethos-pin {
+    height: auto;
+    padding: 6rem 0;
+  }
+
+  .ethos.ethos-reduce .ethos-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .ethos.ethos-reduce .ethos-line {
+    position: relative;
+    inset: auto;
+  }
+</style>
+
+<script>
+  import { initEthos } from "../scripts/ethos";
+  initEthos();
+</script>

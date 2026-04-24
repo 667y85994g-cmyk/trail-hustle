@@ -1,0 +1,98 @@
+---
+const pillars = [
+  {
+    word: "Drive",
+    body: "Fuelled by a desire to grow, to connect, and to do things with meaning. It is the intent behind the action that matters — more than the action itself.",
+  },
+  {
+    word: "Depth",
+    body: "We go beneath the surface. In a world that moves fast and talks loud, we make space for what is real. Conversations that matter. Relationships built on something stronger than networking.",
+  },
+  {
+    word: "Discovery",
+    body: "We stay curious. We ask better questions. We get out of our comfort zones and into places, and mindsets, that expand who we are.",
+  },
+];
+---
+
+<section data-section="pillars" data-pillars class="pillars relative">
+  <div
+    data-pillars-pin
+    class="pillars-pin relative flex h-screen items-center justify-center overflow-hidden"
+  >
+    <div class="relative z-10 mx-auto flex w-full max-w-[min(1200px,92vw)] items-center justify-center px-6">
+      {
+        pillars.map((pillar) => (
+          <div
+            data-pillar
+            class="pillar absolute inset-0 flex flex-col items-center justify-center gap-6 text-center"
+          >
+            <h3
+              data-pillar-word
+              class="pillar-word font-display leading-[0.95] tracking-tight text-ink"
+            >
+              {pillar.word}
+              <span class="text-th-burnt-ochre">.</span>
+            </h3>
+            <p
+              data-pillar-paragraph
+              class="pillar-paragraph mx-auto font-body text-ink"
+            >
+              {pillar.body}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars {
+    min-height: 400vh;
+  }
+
+  .pillar {
+    will-change: opacity, transform;
+  }
+
+  .pillar-word {
+    font-size: clamp(80px, 14vw, 220px);
+    margin: 0;
+  }
+
+  .pillar-paragraph {
+    font-size: clamp(18px, 2vw, 26px);
+    line-height: 1.5;
+    max-width: 34ch;
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 767px) {
+    .pillar-paragraph {
+      max-width: 28ch;
+    }
+  }
+
+  .pillars.pillars-reduce {
+    min-height: auto;
+  }
+
+  .pillars.pillars-reduce .pillars-pin {
+    height: auto;
+    padding: 0;
+    display: block;
+  }
+
+  .pillars.pillars-reduce .pillar {
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    padding: 4rem 1.5rem;
+  }
+</style>
+
+<script>
+  import { initPillars } from "../scripts/pillars";
+  initPillars();
+</script>
