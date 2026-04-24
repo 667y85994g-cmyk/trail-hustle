@@ -44,6 +44,10 @@ All events flow through `window.thTrack(name, params?)` which no-ops if gtag has
 | `page_view` | Default on load (after consent) — via `gtag('config', ...)`. | GA4 auto-params |
 | `substack_click` | Substack icon/link click. | `{ placement: 'waitlist_cta' \| 'footer' }` |
 | `instagram_click` | IG icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
+| `luma_click` | Luma icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
+| `facebook_click` | Facebook icon click (footer only). | `{ placement: 'footer' }` |
+| `tiktok_click` | TikTok icon click (footer only). | `{ placement: 'footer' }` |
+| `youtube_click` | YouTube icon click (footer only). | `{ placement: 'footer' }` |
 | `scroll_depth` | 25 / 50 / 75 / 100% document scroll. Each threshold fires once per session. | `{ depth: 25 \| 50 \| 75 \| 100 }` |
 
 No other events. Deliberately small dictionary — no vanity tracking.
@@ -61,14 +65,15 @@ No other events. Deliberately small dictionary — no vanity tracking.
 1. Open the live site, accept consent.
 2. GA4 → **Admin → DebugView**. Events should appear within 60 seconds.
 3. Click the "Subscribe to the letter" CTA → confirm `substack_click` with `placement: waitlist_cta` arrives.
-4. Click the Instagram icon in the footer → confirm `instagram_click` arrives. Same for Substack → `substack_click`.
-5. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.
+4. Click the waitlist-section secondary links → confirm `instagram_click` with `placement: waitlist` and `luma_click` with `placement: waitlist` arrive.
+5. Click each footer social icon → confirm `instagram_click`, `substack_click`, `luma_click`, `facebook_click`, `tiktok_click`, `youtube_click` all arrive with `placement: footer`.
+6. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.
 
 ### Verifying consent-decline blocks everything
 
 1. DevTools → Application → Local Storage → delete `th-consent` → hard reload.
 2. Click **Decline** on the banner.
-3. Open Network tab, filter on `google` — scroll, click the Subscribe CTA, click IG.
+3. Open Network tab, filter on `google` — scroll, click the Subscribe CTA, click any footer icon.
 4. Zero requests to `google-analytics.com` or `googletagmanager.com`. If any appear, the gate is broken.
 
 ## Manual Search Console setup
