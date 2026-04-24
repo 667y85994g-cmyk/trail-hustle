@@ -12,8 +12,8 @@ export const WHATSAPP_URL = "https://chat.whatsapp.com/BS5PochKiiC6InD49Q5lBU";
 export const FACEBOOK_URL =
   "https://www.facebook.com/profile.php?id=61588825042193";
 
-export const TIKTOK_HANDLE = "trailhustle";
-export const TIKTOK_URL = `https://tiktok.com/@${TIKTOK_HANDLE}`;
+export const REDDIT_HANDLE = "TrailHustle";
+export const REDDIT_URL = `https://www.reddit.com/user/${REDDIT_HANDLE}`;
 
 export const YOUTUBE_HANDLE = "trailhustle";
 export const YOUTUBE_URL = `https://youtube.com/@${YOUTUBE_HANDLE}`;

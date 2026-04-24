@@ -47,7 +47,7 @@ All events flow through `window.thTrack(name, params?)` which no-ops if gtag has
 | `luma_click` | Luma icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
 | `whatsapp_click` | WhatsApp community icon click (footer only). | `{ placement: 'footer' }` |
 | `facebook_click` | Facebook icon click (footer only). | `{ placement: 'footer' }` |
-| `tiktok_click` | TikTok icon click (footer only). | `{ placement: 'footer' }` |
+| `reddit_click` | Reddit icon click (footer only). | `{ placement: 'footer' }` |
 | `youtube_click` | YouTube icon click (footer only). | `{ placement: 'footer' }` |
 | `scroll_depth` | 25 / 50 / 75 / 100% document scroll. Each threshold fires once per session. | `{ depth: 25 \| 50 \| 75 \| 100 }` |
 
@@ -67,7 +67,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 2. GA4 → **Admin → DebugView**. Events should appear within 60 seconds.
 3. Click the "Subscribe to the letter" CTA → confirm `substack_click` with `placement: waitlist_cta` arrives.
 4. Click the waitlist-section secondary links → confirm `instagram_click` with `placement: waitlist` and `luma_click` with `placement: waitlist` arrive.
-5. Click each footer social icon → confirm `instagram_click`, `substack_click`, `luma_click`, `whatsapp_click`, `facebook_click`, `tiktok_click`, `youtube_click` all arrive with `placement: footer`.
+5. Click each footer social icon → confirm `instagram_click`, `substack_click`, `luma_click`, `whatsapp_click`, `facebook_click`, `reddit_click`, `youtube_click` all arrive with `placement: footer`.
 6. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.
 
 ### Verifying consent-decline blocks everything
