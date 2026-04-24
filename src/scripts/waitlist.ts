@@ -29,6 +29,8 @@ export function initWaitlist() {
         return;
       }
 
+      window.thTrack?.("waitlist_submit_attempt");
+
       if (submitBtn) submitBtn.disabled = true;
 
       try {
@@ -39,6 +41,7 @@ export function initWaitlist() {
         });
 
         if (response.ok) {
+          window.thTrack?.("waitlist_submit_success", { method: "waitlist" });
           form.classList.add("hidden");
           success.classList.remove("hidden");
           if (input) input.value = "";
@@ -56,8 +59,12 @@ export function initWaitlist() {
         } catch {
           /* keep default message */
         }
+        window.thTrack?.("waitlist_submit_error", {
+          error_type: `http_${response.status}`,
+        });
         showError(message);
       } catch {
+        window.thTrack?.("waitlist_submit_error", { error_type: "network" });
         showError("Network error. Please try again.");
       } finally {
         if (submitBtn) submitBtn.disabled = false;

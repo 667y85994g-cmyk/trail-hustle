@@ -143,3 +143,10 @@ const year = new Date().getFullYear();
     }
   }
 </style>
+
+<script>
+  const link = document.querySelector<HTMLAnchorElement>(".footer-ig");
+  link?.addEventListener("click", () => {
+    window.thTrack?.("instagram_click", { placement: "footer" });
+  });
+</script>

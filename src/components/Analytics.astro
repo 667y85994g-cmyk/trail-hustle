@@ -1,0 +1,11 @@
+---
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "";
+---
+
+<script is:inline define:vars={{ gaId }}>
+  window.__TH_GA_ID = gaId || "";
+</script>
+<script>
+  import { initAnalytics } from "../scripts/analytics";
+  initAnalytics();
+</script>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://trailhustle.co/sitemap-index.xml
+Sitemap: https://trailhustle.com/sitemap-index.xml

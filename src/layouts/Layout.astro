@@ -1,7 +1,10 @@
 ---
 import "../styles/global.css";
 import GroundTopography from "../components/GroundTopography.astro";
+import Consent from "../components/Consent.astro";
+import Analytics from "../components/Analytics.astro";
 import {
+  INSTAGRAM_URL,
   SITE_URL,
   SITE_NAME,
   SITE_TITLE,
@@ -23,6 +26,26 @@ const {
 const siteOrigin = Astro.site?.toString() ?? SITE_URL;
 const canonicalURL = new URL(Astro.url.pathname, siteOrigin).toString();
 const absoluteOg = new URL(ogImage, siteOrigin).toString();
+const absoluteLogo = new URL("/logo-primary.png", siteOrigin).toString();
+const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION ?? "";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: siteOrigin,
+  logo: absoluteLogo,
+  description: "A community built as a training ground.",
+  sameAs: [INSTAGRAM_URL],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: siteOrigin,
+  inLanguage: "en-GB",
+};
 ---
 
 <!doctype html>
@@ -31,6 +54,11 @@ const absoluteOg = new URL(ogImage, siteOrigin).toString();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#F7F5F1" />
+    {gscVerification && (
+      <meta name="google-site-verification" content={gscVerification} />
+    )}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -46,6 +74,7 @@ const absoluteOg = new URL(ogImage, siteOrigin).toString();
     <meta property="og:image" content={absoluteOg} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="en_GB" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -58,12 +87,23 @@ const absoluteOg = new URL(ogImage, siteOrigin).toString();
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(websiteSchema)}
+    />
   </head>
   <body class="bg-paper text-ink font-body antialiased leading-[1.55]">
     <GroundTopography />
     <div class="relative z-10">
       <slot />
     </div>
+    <Consent />
+    <Analytics />
 
     <script>
       import { initScroll } from "../scripts/scroll";

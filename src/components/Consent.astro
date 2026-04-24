@@ -1,0 +1,99 @@
+---
+---
+
+<div
+  data-consent
+  class="consent"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Analytics cookie consent"
+  hidden
+>
+  <div class="consent-inner">
+    <p class="consent-copy font-body">
+      We use a light-touch analytics cookie to see what lands. Nothing else. Accept to help us listen.
+    </p>
+    <div class="consent-buttons">
+      <button
+        type="button"
+        data-consent-decline
+        class="consent-btn consent-btn-decline font-display"
+      >
+        Decline
+      </button>
+      <button
+        type="button"
+        data-consent-accept
+        class="consent-btn consent-btn-accept font-display"
+      >
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .consent {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: var(--color-paper);
+    border-top: 1px solid #d9d3c8;
+    padding: 16px;
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .consent-copy {
+    margin: 0;
+    flex: 1 1 320px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+  .consent-buttons {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+  }
+  .consent-btn {
+    font-size: 14px;
+    line-height: 1;
+    padding: 10px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    color: var(--color-ink);
+    transition: opacity 0.2s ease;
+  }
+  .consent-btn-accept {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .consent-btn:hover,
+  .consent-btn:focus-visible {
+    opacity: 0.85;
+  }
+  @media (max-width: 540px) {
+    .consent-buttons {
+      flex: 1 1 100%;
+      justify-content: flex-end;
+    }
+  }
+</style>
+
+<script>
+  import { initConsent } from "../scripts/consent";
+  initConsent();
+</script>
