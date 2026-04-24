@@ -18,8 +18,8 @@ One page. Scroll-driven. Cinematic-but-restrained — the site feels *considered
 2. **Ethos reveal** — pinned, line-by-line. The ethos (Section 2 of the brief): *"Trail Hustle is where people come to find out what they're capable of, in the company of others asking the same."*
 3. **Three pillars** — Drive, Depth, Discovery. Each word lands, then its paragraph.
 4. **Horizon moment** — *"Built, not granted."* A breath. A held frame.
-5. **Waitlist CTA** — *"Stay close."* Email field. No promises of what comes next, no product language.
-6. **Footer** — Instagram link, waitlist link, minimal meta. The window mark, small.
+5. **Letter CTA** — *"A letter a week. Subscribers get first word."* A single button takes the visitor to the Substack. No email form on the site — the Phase 0 commitment vehicle is the weekly Substack letter, and the commitment happens on Substack's domain. No product language, no waitlist framing.
+6. **Footer** — Instagram and Substack icons, minimal meta. The window mark, small.
 
 ## What this site is not
 
@@ -27,6 +27,7 @@ One page. Scroll-driven. Cinematic-but-restrained — the site feels *considered
 - Not a manifesto. Short moments beat long paragraphs.
 - Not heavy with imagery — topography + type carry it.
 - Not loud. No secondary-palette colour unless a moment earns it.
+- Not a waitlist. The Phase 0 commitment vehicle is the weekly Substack letter — a live thing you can already receive, not a pre-launch holding pattern. The earlier waitlist framing ("Stay close. We'll send word…") is retired. See `/strategy/state-of-play-*.md` for the pivot.
 
 ## Feel — what we're protecting
 
