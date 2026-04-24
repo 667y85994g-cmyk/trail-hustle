@@ -1,5 +1,5 @@
 ---
-import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
+import { INSTAGRAM_URL, LUMA_URL, SUBSTACK_URL } from "../config";
 ---
 
 <section
@@ -63,6 +63,29 @@ import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
           <path d="M3 7 L11 7 M7 3 L11 7 L7 11" />
         </svg>
       </a>
+      <span aria-hidden="true" class="waitlist-social-dot">·</span>
+      <a
+        href={LUMA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-waitlist-luma
+        class="waitlist-social-link"
+      >
+        <span>find events on Luma</span>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 7 L11 7 M7 3 L11 7 L7 11" />
+        </svg>
+      </a>
     </div>
   </div>
 </section>
@@ -96,6 +119,11 @@ import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
   }
 
   .waitlist-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
     font-size: 14px;
   }
 
@@ -111,6 +139,10 @@ import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
   .waitlist-social-link:focus-visible {
     color: var(--color-ink);
   }
+
+  .waitlist-social-dot {
+    color: var(--color-ink-mute);
+  }
 </style>
 
 <script>
@@ -124,5 +156,11 @@ import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
     .querySelector<HTMLAnchorElement>("[data-waitlist-ig]")
     ?.addEventListener("click", () => {
       window.thTrack?.("instagram_click", { placement: "waitlist" });
+    });
+
+  document
+    .querySelector<HTMLAnchorElement>("[data-waitlist-luma]")
+    ?.addEventListener("click", () => {
+      window.thTrack?.("luma_click", { placement: "waitlist" });
     });
 </script>

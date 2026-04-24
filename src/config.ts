@@ -4,6 +4,9 @@ export const INSTAGRAM_URL = `https://instagram.com/${INSTAGRAM_HANDLE}`;
 export const SUBSTACK_HANDLE = "trailhustle";
 export const SUBSTACK_URL = `https://${SUBSTACK_HANDLE}.substack.com`;
 
+export const LUMA_HANDLE = "trailhustle";
+export const LUMA_URL = `https://luma.com/user/${LUMA_HANDLE}`;
+
 export const SITE_URL = "https://trailhustle.com";
 export const SITE_NAME = "Trail Hustle";
 export const SITE_TITLE = "Trail Hustle — This is where the hustle meets the horizon.";
