@@ -32,6 +32,14 @@ const endpoint =
       <div class="waitlist-form-row">
         <label class="sr-only" for="waitlist-email">Your email address</label>
         <input
+          type="text"
+          name="_gotcha"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          class="waitlist-honeypot"
+        />
+        <input
           id="waitlist-email"
           name="email"
           type="email"
@@ -101,6 +109,15 @@ const endpoint =
     gap: 0.75rem;
     align-items: stretch;
     width: 100%;
+  }
+
+  .waitlist-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .waitlist-input {
