@@ -65,7 +65,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 
 1. Open the live site, accept consent.
 2. GA4 → **Admin → DebugView**. Events should appear within 60 seconds.
-3. Click the "Subscribe to the letter" CTA → confirm `substack_click` with `placement: waitlist_cta` arrives.
+3. Click the "Subscribe to The Log" CTA → confirm `substack_click` with `placement: waitlist_cta` arrives.
 4. Click the waitlist-section secondary links → confirm `instagram_click` with `placement: waitlist` and `luma_click` with `placement: waitlist` arrive.
 5. Click each footer social icon → confirm `instagram_click`, `substack_click`, `luma_click`, `whatsapp_click`, `facebook_click`, `reddit_click`, `youtube_click` all arrive with `placement: footer`.
 6. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.

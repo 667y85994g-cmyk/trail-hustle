@@ -18,7 +18,7 @@ One page. Scroll-driven. Cinematic-but-restrained — the site feels *considered
 2. **Ethos reveal** — pinned, line-by-line. The ethos (Section 2 of the brief): *"Trail Hustle is where people come to find out what they're capable of, in the company of others asking the same."*
 3. **Three pillars** — Drive, Depth, Discovery. Each word lands, then its paragraph.
 4. **Horizon moment** — *"Built, not granted."* A breath. A held frame.
-5. **Letter CTA** — *"A letter a week. Subscribers get first word."* A single button takes the visitor to the Substack. No email form on the site — the Phase 0 commitment vehicle is the weekly Substack letter, and the commitment happens on Substack's domain. No product language, no waitlist framing.
+5. **The Log** — *"The Log. A letter a week. Subscribers get first word."* A single button ("Subscribe to The Log") takes the visitor to the Substack. No email form on the site — the Phase 0 commitment vehicle is the weekly letter (the current format of The Log), and the commitment happens on Substack's domain. No product language, no waitlist framing.
 6. **Footer** — Instagram and Substack icons, minimal meta. The window mark, small.
 
 ## What this site is not
