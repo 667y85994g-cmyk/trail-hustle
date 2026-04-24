@@ -1,6 +1,6 @@
 ---
 import Logo from "./Logo.astro";
-import { INSTAGRAM_URL } from "../config";
+import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
 
 const year = new Date().getFullYear();
 ---
@@ -23,7 +23,7 @@ const year = new Date().getFullYear();
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          class="footer-ig"
+          class="footer-social-link footer-ig"
           aria-label="Trail Hustle on Instagram"
         >
           <svg
@@ -42,6 +42,24 @@ const year = new Date().getFullYear();
             <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
           </svg>
           <span class="sr-only">Instagram</span>
+        </a>
+        <a
+          href={SUBSTACK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-social-link footer-substack"
+          aria-label="Trail Hustle on Substack"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+          </svg>
+          <span class="sr-only">Substack</span>
         </a>
       </p>
     </div>
@@ -105,15 +123,19 @@ const year = new Date().getFullYear();
     color: var(--color-ink-mute);
   }
 
-  .footer-ig {
+  .footer-social-link {
     display: inline-flex;
     align-items: center;
     color: var(--color-ink-mute);
     transition: color 0.2s ease;
   }
 
-  .footer-ig:hover,
-  .footer-ig:focus-visible {
+  .footer-social-link + .footer-social-link {
+    margin-left: 10px;
+  }
+
+  .footer-social-link:hover,
+  .footer-social-link:focus-visible {
     color: var(--color-ink);
   }
 
@@ -145,8 +167,15 @@ const year = new Date().getFullYear();
 </style>
 
 <script>
-  const link = document.querySelector<HTMLAnchorElement>(".footer-ig");
-  link?.addEventListener("click", () => {
-    window.thTrack?.("instagram_click", { placement: "footer" });
-  });
+  document
+    .querySelector<HTMLAnchorElement>(".footer-ig")
+    ?.addEventListener("click", () => {
+      window.thTrack?.("instagram_click", { placement: "footer" });
+    });
+
+  document
+    .querySelector<HTMLAnchorElement>(".footer-substack")
+    ?.addEventListener("click", () => {
+      window.thTrack?.("substack_click", { placement: "footer" });
+    });
 </script>
