@@ -45,7 +45,8 @@ All events flow through `window.thTrack(name, params?)` which no-ops if gtag has
 | `waitlist_submit_attempt` | Fired before network call on form submit. | — |
 | `waitlist_submit_success` | Fired after Formspree returns 2xx. | `{ method: 'waitlist' }` |
 | `waitlist_submit_error` | Fired on non-2xx or network failure. | `{ error_type: 'http_<code>' \| 'network' }` |
-| `instagram_click` | Footer IG icon click. | `{ placement: 'footer' }` |
+| `instagram_click` | IG icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
+| `substack_click` | Substack icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
 | `scroll_depth` | 25 / 50 / 75 / 100% document scroll. Each threshold fires once per session. | `{ depth: 25 \| 50 \| 75 \| 100 }` |
 
 No other events. Deliberately small dictionary — no vanity tracking.
@@ -63,7 +64,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 1. Open the live site, accept consent.
 2. GA4 → **Admin → DebugView**. Events should appear within 60 seconds.
 3. Submit the waitlist form → confirm `waitlist_submit_attempt` and `waitlist_submit_success` arrive.
-4. Click the Instagram icon in the footer → confirm `instagram_click` arrives.
+4. Click the Instagram icon in the footer → confirm `instagram_click` arrives. Same for Substack → `substack_click`.
 5. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.
 
 ### Verifying consent-decline blocks everything
