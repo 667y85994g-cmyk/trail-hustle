@@ -42,11 +42,8 @@ All events flow through `window.thTrack(name, params?)` which no-ops if gtag has
 | Event | When | Parameters |
 | --- | --- | --- |
 | `page_view` | Default on load (after consent) — via `gtag('config', ...)`. | GA4 auto-params |
-| `waitlist_submit_attempt` | Fired before network call on form submit. | — |
-| `waitlist_submit_success` | Fired after Formspree returns 2xx. | `{ method: 'waitlist' }` |
-| `waitlist_submit_error` | Fired on non-2xx or network failure. | `{ error_type: 'http_<code>' \| 'network' }` |
+| `substack_click` | Substack icon/link click. | `{ placement: 'waitlist_cta' \| 'footer' }` |
 | `instagram_click` | IG icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
-| `substack_click` | Substack icon/link click. | `{ placement: 'footer' \| 'waitlist' }` |
 | `scroll_depth` | 25 / 50 / 75 / 100% document scroll. Each threshold fires once per session. | `{ depth: 25 \| 50 \| 75 \| 100 }` |
 
 No other events. Deliberately small dictionary — no vanity tracking.
@@ -54,7 +51,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 ## Manual GA4 setup (do this after deploy)
 
 1. Create the GA4 property at [analytics.google.com](https://analytics.google.com) if not already done. Current property: `G-72LRCS3Y6L`.
-2. In **Admin → Events**, mark `waitlist_submit_success` as a **key event** (formerly "conversion"). This tells GA4 it's the primary success signal.
+2. In **Admin → Events**, mark `substack_click` as a **key event** (formerly "conversion") — filter on `placement = waitlist_cta` for the primary subscribe-intent signal. Actual subscriptions land on Substack itself; GA4's value is the intent signal from the homepage CTA.
 3. **Admin → Data Settings → Data Retention** — set to **14 months** (max on the free tier). Default is 2 months which is uselessly short.
 4. **Admin → Data Settings → Data Collection** — confirm "Anonymize IP" is on. (Default yes on GA4, but confirm.)
 5. **Admin → Product Links → Search Console Links** — once the GSC property is verified, link it here so you can see search-query data inside GA4.
@@ -63,7 +60,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 
 1. Open the live site, accept consent.
 2. GA4 → **Admin → DebugView**. Events should appear within 60 seconds.
-3. Submit the waitlist form → confirm `waitlist_submit_attempt` and `waitlist_submit_success` arrive.
+3. Click the "Subscribe to the letter" CTA → confirm `substack_click` with `placement: waitlist_cta` arrives.
 4. Click the Instagram icon in the footer → confirm `instagram_click` arrives. Same for Substack → `substack_click`.
 5. Scroll through the site → confirm `scroll_depth` at each 25/50/75/100.
 
@@ -71,7 +68,7 @@ No other events. Deliberately small dictionary — no vanity tracking.
 
 1. DevTools → Application → Local Storage → delete `th-consent` → hard reload.
 2. Click **Decline** on the banner.
-3. Open Network tab, filter on `google` — scroll, submit form, click IG.
+3. Open Network tab, filter on `google` — scroll, click the Subscribe CTA, click IG.
 4. Zero requests to `google-analytics.com` or `googletagmanager.com`. If any appear, the gate is broken.
 
 ## Manual Search Console setup

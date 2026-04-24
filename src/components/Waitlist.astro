@@ -1,73 +1,46 @@
 ---
 import { INSTAGRAM_URL, SUBSTACK_URL } from "../config";
-
-const endpoint =
-  import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ??
-  "https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID";
 ---
 
 <section
   data-section="waitlist"
-  data-waitlist
   class="waitlist relative flex min-h-screen items-center justify-center overflow-hidden px-6"
 >
   <div class="waitlist-block relative mx-auto w-full max-w-[640px] text-center">
     <h2
       class="waitlist-heading font-display leading-[1.05] tracking-tight text-ink"
     >
-      Stay close<span class="text-th-burnt-ochre">.</span>
+      A letter a week<span class="text-th-burnt-ochre">.</span>
     </h2>
 
     <p class="waitlist-subline mx-auto mt-5 font-body text-ink-mute">
-      We'll send word when there's something worth saying. Not before.
+      Subscribers get first word.
     </p>
 
-    <form
-      data-waitlist-form
-      action={endpoint}
-      method="POST"
-      class="waitlist-form mt-12"
-      novalidate={false}
+    <a
+      href={SUBSTACK_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-waitlist-cta
+      class="waitlist-cta mt-12 inline-flex items-center gap-2 font-display"
     >
-      <div class="waitlist-form-row">
-        <label class="sr-only" for="waitlist-email">Your email address</label>
-        <input
-          type="text"
-          name="_gotcha"
-          tabindex="-1"
-          autocomplete="off"
-          aria-hidden="true"
-          class="waitlist-honeypot"
-        />
-        <input
-          id="waitlist-email"
-          name="email"
-          type="email"
-          required
-          autocomplete="email"
-          placeholder="your@email.com"
-          class="waitlist-input"
-        />
-        <button type="submit" class="waitlist-submit font-display">
-          Keep me in
-        </button>
-      </div>
-      <p
-        data-waitlist-error
-        class="waitlist-error mt-4 hidden text-sm text-th-clay-red"
-        role="alert"
+      <span>Subscribe to the letter</span>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
       >
-      </p>
-    </form>
+        <path d="M3 7 L11 7 M7 3 L11 7 L7 11" />
+      </svg>
+    </a>
 
-    <div
-      data-waitlist-success
-      class="waitlist-success mt-12 hidden font-display text-ink"
-    >
-      You're on the list. We'll be in touch.
-    </div>
-
-    <div class="waitlist-social mt-8 font-body text-ink-mute">
+    <div class="waitlist-social mt-10 font-body text-ink-mute">
       <a
         href={INSTAGRAM_URL}
         target="_blank"
@@ -75,30 +48,7 @@ const endpoint =
         data-waitlist-ig
         class="waitlist-social-link"
       >
-        <span>Instagram</span>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M3 7 L11 7 M7 3 L11 7 L7 11" />
-        </svg>
-      </a>
-      <span aria-hidden="true" class="waitlist-social-dot">·</span>
-      <a
-        href={SUBSTACK_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-waitlist-substack
-        class="waitlist-social-link"
-      >
-        <span>Substack</span>
+        <span>or follow on Instagram</span>
         <svg
           width="14"
           height="14"
@@ -129,81 +79,23 @@ const endpoint =
     max-width: 44ch;
   }
 
-  .waitlist-form-row {
-    display: flex;
-    flex-direction: row;
-    gap: 0.75rem;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .waitlist-honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .waitlist-input {
-    flex: 1 1 auto;
-    min-width: 0;
-    padding: 18px 24px;
-    border: 1px solid #d9d3c8;
-    border-radius: 999px;
-    background: transparent;
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.2;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  .waitlist-input::placeholder {
-    color: var(--color-ink-mute);
-  }
-
-  .waitlist-input:focus {
-    border-color: var(--color-ink);
-  }
-
-  .waitlist-submit {
-    flex: 0 0 auto;
-    padding: 14px 32px;
-    border: 1px solid transparent;
+  .waitlist-cta {
+    padding: 16px 32px;
     border-radius: 999px;
     background-color: var(--color-ink);
     color: var(--color-paper);
-    font-family: var(--font-display);
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.2;
-    cursor: pointer;
     transition: background-color 0.2s ease;
     white-space: nowrap;
   }
 
-  .waitlist-submit:hover,
-  .waitlist-submit:focus-visible {
+  .waitlist-cta:hover,
+  .waitlist-cta:focus-visible {
     background-color: #d15839;
   }
 
-  .waitlist-submit:disabled {
-    opacity: 0.6;
-    cursor: wait;
-  }
-
-  .waitlist-success {
-    font-size: 22px;
-    line-height: 1.3;
-  }
-
   .waitlist-social {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
     font-size: 14px;
   }
 
@@ -219,51 +111,18 @@ const endpoint =
   .waitlist-social-link:focus-visible {
     color: var(--color-ink);
   }
-
-  .waitlist-social-dot {
-    color: var(--color-ink-mute);
-  }
-
-  .hidden {
-    display: none !important;
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  @media (max-width: 540px) {
-    .waitlist-form-row {
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .waitlist-submit {
-      width: 100%;
-    }
-  }
 </style>
 
 <script>
-  import { initWaitlist } from "../scripts/waitlist";
-  initWaitlist();
+  document
+    .querySelector<HTMLAnchorElement>("[data-waitlist-cta]")
+    ?.addEventListener("click", () => {
+      window.thTrack?.("substack_click", { placement: "waitlist_cta" });
+    });
 
   document
     .querySelector<HTMLAnchorElement>("[data-waitlist-ig]")
     ?.addEventListener("click", () => {
       window.thTrack?.("instagram_click", { placement: "waitlist" });
-    });
-
-  document
-    .querySelector<HTMLAnchorElement>("[data-waitlist-substack]")
-    ?.addEventListener("click", () => {
-      window.thTrack?.("substack_click", { placement: "waitlist" });
     });
 </script>
