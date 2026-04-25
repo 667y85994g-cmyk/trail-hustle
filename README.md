@@ -49,7 +49,10 @@ One page. Scroll-driven. Cinematic-but-restrained — the site feels *considered
 site/
 ├── README.md                 ← this file
 ├── public/
-│   └── fonts/                ← CalSans-Regular.ttf (copied from /brand/Fonts/)
+│   ├── fonts/                ← CalSans-Regular.ttf (copied from /brand/Fonts/)
+│   └── og-image.png          ← rendered from /brand/svg/og-image.svg (do not edit directly)
+├── scripts/
+│   └── render-og.mjs         ← regenerates og-image.png from the canonical SVG
 └── src/
     ├── layouts/
     │   └── Layout.astro      ← base layout: paper bg, Inter default, Lenis init
@@ -59,6 +62,16 @@ site/
     └── styles/
         └── global.css        ← @font-face, CSS custom props, Tailwind layers
 ```
+
+### OG image — regenerating after edits
+
+The social preview image is rendered from `/brand/svg/og-image.svg`. After editing that SVG, run from `/site/`:
+
+```
+node scripts/render-og.mjs
+```
+
+This writes three PNGs in sync: `site/public/og-image.png` (the live asset) plus 1× and 2× exports into `/brand/svg/png/`. Don't hand-edit the PNGs.
 
 ## Running locally
 
