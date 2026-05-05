@@ -11,9 +11,19 @@
     Trail Hustle is the third place — not work, not home, but the place that makes both better.
   </p>
   <p
+    class="what-is-it-mid mt-6 font-display leading-[1.25] tracking-tight text-ink-mute"
+  >
+    The Hustle is the daily work that compounds.
+  </p>
+  <p
+    class="what-is-it-mid mt-3 font-display leading-[1.25] tracking-tight text-ink-mute"
+  >
+    The Trail is where it crystallises.
+  </p>
+  <p
     class="what-is-it-sub mt-6 font-display leading-[1.25] tracking-tight text-ink-mute"
   >
-    Driven people, on the trail, in good company<span class="text-th-burnt-ochre">.</span>
+    Driven people, in good company<span class="text-th-burnt-ochre">.</span>
   </p>
 </section>
 
@@ -24,9 +34,27 @@
     max-width: 22ch;
   }
 
+  .what-is-it-mid {
+    font-size: clamp(22px, 2.8vw, 36px);
+    max-width: 30ch;
+  }
+
   .what-is-it-sub {
     font-size: clamp(20px, 2.4vw, 30px);
-    margin-top: 1.5rem;
     max-width: 24ch;
+  }
+
+  @media (max-width: 480px) {
+    .what-is-it-mid {
+      margin-top: 1rem;
+    }
+
+    .what-is-it-mid + .what-is-it-mid {
+      margin-top: 0.5rem;
+    }
+
+    .what-is-it-sub {
+      margin-top: 1rem;
+    }
   }
 </style>
