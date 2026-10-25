@@ -1,0 +1,46 @@
+---
+import Logo from "./Logo.astro";
+
+interface Props {
+  current?: "tools" | "fuel-planner" | "none";
+}
+
+const { current = "none" } = Astro.props;
+---
+
+<header class="tool-header no-print border-b border-rule">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
+    <a href="/" class="block w-[104px] shrink-0" aria-label="Trail Hustle home">
+      <Logo class="h-auto w-full" ariaLabel="Trail Hustle." />
+    </a>
+    <nav aria-label="Primary" class="flex items-center gap-6 font-display text-[15px]">
+      <a
+        href="/tools"
+        class:list={["tool-nav-link", { "is-current": current === "tools" }]}
+        aria-current={current === "tools" ? "page" : undefined}
+      >
+        Tools
+      </a>
+      {
+        current === "fuel-planner" && (
+          <a href="/tools/fuel-planner" class="tool-nav-link is-current" aria-current="page">
+            Fuel Planner
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .tool-nav-link {
+    color: var(--color-ink-mute);
+    transition: color 0.2s ease;
+  }
+
+  .tool-nav-link:hover,
+  .tool-nav-link:focus-visible,
+  .tool-nav-link.is-current {
+    color: var(--color-ink);
+  }
+</style>

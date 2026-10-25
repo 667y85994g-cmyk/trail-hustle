@@ -21,6 +21,11 @@ const year = new Date().getFullYear();
       <p class="footer-strapline font-body">
         A community built as a training ground.
       </p>
+      <p class="footer-links font-body">
+        <a href="/tools" class="footer-text-link">Tools</a>
+        <span aria-hidden="true" class="footer-meta-dot">·</span>
+        <a href="/legal" class="footer-text-link">Legal</a>
+      </p>
       <p class="footer-meta font-body">
         <span>© {year}</span>
         <span aria-hidden="true" class="footer-meta-dot">·</span>
@@ -169,6 +174,24 @@ const year = new Date().getFullYear();
 
   .footer-meta-dot {
     color: var(--color-ink-mute);
+  }
+
+  .footer-links {
+    margin: 4px 0 0;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-text-link {
+    color: var(--color-ink-mute);
+    transition: color 0.2s ease;
+  }
+
+  .footer-text-link:hover,
+  .footer-text-link:focus-visible {
+    color: var(--color-ink);
   }
 
   .footer-social-link {

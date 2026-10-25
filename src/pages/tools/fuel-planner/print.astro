@@ -1,0 +1,8 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import PrintView from "../../../fuel-planner/views/PrintView";
+---
+
+<Layout title="Race card — Trail Hustle Fuel Planner" variant="tool" noindex>
+  <PrintView client:only="react" />
+</Layout>

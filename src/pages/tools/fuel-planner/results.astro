@@ -1,0 +1,14 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ToolHeader from "../../../components/ToolHeader.astro";
+import Footer from "../../../components/Footer.astro";
+import ResultsView from "../../../fuel-planner/views/ResultsView";
+---
+
+<Layout title="Your race plan — Trail Hustle Fuel Planner" variant="tool" noindex>
+  <ToolHeader current="fuel-planner" />
+  <div class="min-h-[70vh]">
+    <ResultsView client:only="react" />
+  </div>
+  <div class="no-print"><Footer /></div>
+</Layout>

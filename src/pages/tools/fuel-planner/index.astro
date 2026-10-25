@@ -1,0 +1,18 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ToolHeader from "../../../components/ToolHeader.astro";
+import Footer from "../../../components/Footer.astro";
+import PlannerView from "../../../fuel-planner/views/PlannerView";
+---
+
+<Layout
+  title="Fuel Planner — Trail Hustle"
+  description="Build a terrain-aware fuelling plan for your trail or ultra race. Upload your GPX, add your fuel and aid stations, and get a plan for race day."
+  variant="tool"
+>
+  <ToolHeader current="fuel-planner" />
+  <main class="min-h-[70vh]">
+    <PlannerView client:only="react" />
+  </main>
+  <Footer />
+</Layout>
