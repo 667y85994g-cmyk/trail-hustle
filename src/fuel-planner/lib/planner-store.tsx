@@ -91,11 +91,12 @@ function plannerReducer(state: PlannerState, action: PlannerAction): PlannerStat
         isDirty: true,
       };
 
+    // A new or cleared route makes any generated plan stale, so drop it rather than show it against the wrong course.
     case "SET_ROUTE":
-      return { ...state, parsedRoute: action.route, isDirty: true };
+      return { ...state, parsedRoute: action.route, lastPlannerOutput: undefined, isDirty: true };
 
     case "CLEAR_ROUTE":
-      return { ...state, parsedRoute: undefined, isDirty: true };
+      return { ...state, parsedRoute: undefined, lastPlannerOutput: undefined, isDirty: true };
 
     case "SET_FUEL_INVENTORY":
       return { ...state, fuelInventory: action.items, isDirty: true };

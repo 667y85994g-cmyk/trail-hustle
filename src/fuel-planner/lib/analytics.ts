@@ -20,6 +20,10 @@ export function trackRouteUploaded(params: {
   });
 }
 
+export function trackLibraryRouteOpened(route: string): void {
+  track("library_route_opened", { route });
+}
+
 export function trackProfileCompleted(params: {
   experience_level: string;
   fuelling_level: string;

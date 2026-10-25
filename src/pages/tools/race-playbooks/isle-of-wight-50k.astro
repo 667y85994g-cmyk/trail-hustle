@@ -1,0 +1,397 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import Layout from "../../../layouts/Layout.astro";
+import ToolHeader from "../../../components/ToolHeader.astro";
+import Footer from "../../../components/Footer.astro";
+import Topography from "../../../components/Topography.astro";
+
+const GPX_PATH = "/routes/isle-of-wight-50k.gpx";
+const PLANNER_LINK = "/tools/fuel-planner?route=isle-of-wight-50k";
+
+// The watch measured 55.0 km; the thinned route file measures slightly less. Stops are placed proportionally.
+const RACE_KM = 55.0;
+
+const gpx = fs.readFileSync(path.join(process.cwd(), "public", GPX_PATH), "utf8");
+const raw = [...gpx.matchAll(/<trkpt lat="([-\d.]+)" lon="([-\d.]+)"><ele>([-\d.]+)<\/ele>/g)].map((m) => ({
+  lat: +m[1],
+  lon: +m[2],
+  ele: +m[3],
+}));
+const rad = Math.PI / 180;
+let along = 0;
+const profile = raw.map((p, i) => {
+  if (i > 0) {
+    const q = raw[i - 1];
+    const h =
+      Math.sin(((p.lat - q.lat) * rad) / 2) ** 2 +
+      Math.cos(q.lat * rad) * Math.cos(p.lat * rad) * Math.sin(((p.lon - q.lon) * rad) / 2) ** 2;
+    along += 6371 * 2 * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+  }
+  return { km: along, ele: p.ele };
+});
+const routeKm = along;
+
+const W = 1000;
+const H = 220;
+const PAD = { top: 16, bottom: 28, left: 0, right: 0 };
+const maxEle = Math.ceil(Math.max(...profile.map((p) => p.ele)) / 50) * 50;
+const x = (km: number) => PAD.left + (km / routeKm) * (W - PAD.left - PAD.right);
+const y = (ele: number) => PAD.top + (1 - Math.max(ele, 0) / maxEle) * (H - PAD.top - PAD.bottom);
+const step = Math.max(1, Math.floor(profile.length / 400));
+const sampled = profile.filter((_, i) => i % step === 0).concat(profile[profile.length - 1]);
+const line = sampled.map((p, i) => `${i ? "L" : "M"}${x(p.km).toFixed(1)},${y(p.ele).toFixed(1)}`).join(" ");
+const area = `${line} L${x(routeKm).toFixed(1)},${H - PAD.bottom} L${x(0).toFixed(1)},${H - PAD.bottom} Z`;
+const highest = profile.reduce((a, b) => (b.ele > a.ele ? b : a));
+
+// From the race write-up: stationary gaps over 90 seconds, clustered by where they happened.
+const stops = [
+  { km: 4.4, where: "4.4 km", elapsed: "0:30", minutes: 1.8 },
+  { km: 10.6, where: "10.6 km", elapsed: "1:18", minutes: 4.1 },
+  { km: 14.0, where: "14.0 km", elapsed: "1:48", minutes: 3.4 },
+  { km: 18.9, where: "18.6–19.3 km", elapsed: "2:24–2:36", minutes: 5.5 },
+  { km: 26.4, where: "26.4 km, halfway", elapsed: "3:36–3:42", minutes: 10.5 },
+  { km: 34.4, where: "34.4 km", elapsed: "4:48", minutes: 4.8 },
+  { km: 45.2, where: "42.5, 45.2 and 48.3 km", elapsed: "6:00–6:54", minutes: 9.9 },
+];
+const stopX = (km: number) => x((km / RACE_KM) * routeKm);
+const kmTicks = [0, 10, 20, 30, 40, 50];
+
+const facts = [
+  { value: "55.0 km", label: "Measured on the day. Billed as 50." },
+  { value: "864 m", label: "Of climbing, none of it long" },
+  { value: "7:46", label: "Start to finish, 7:07 of it moving" },
+  { value: "39 min", label: "Standing still, across fifteen stops" },
+  { value: "14°C", label: "Cool, light wind, a trace of rain" },
+];
+---
+
+<Layout
+  title="Isle of Wight 50 km ultra — Race playbook — Trail Hustle"
+  description="The Isle of Wight 50 km ultra, run on 2 May 2026: the route, the ground, where the time went, and what I'd do differently. Download the GPX or open it in the Fuel Planner."
+  variant="tool"
+  noindex
+>
+  <ToolHeader current="tools" />
+  <main>
+    <section class="relative overflow-hidden border-b border-rule">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Topography stroke="#D9D3C8" opacity={0.55} preserveAspectRatio="xMidYMid slice" class="h-full w-full" />
+      </div>
+      <div class="relative mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pt-28">
+        <p class="text-[13px] uppercase tracking-[0.14em] text-ink-mute">Race playbook · Isle of Wight · 2 May 2026</p>
+        <h1 class="mt-4 max-w-[16ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.04] tracking-tight text-ink">
+          Isle of Wight 50 km ultra<span class="text-th-burnt-ochre">.</span>
+        </h1>
+        <p class="mt-6 max-w-[56ch] text-[18px] leading-relaxed text-ink-mute">
+          Point to point, from the south of the island to the north. Billed as fifty kilometres; my watch
+          said fifty-five. I finished stronger than I started, and still lost the best part of forty
+          minutes standing still. This is what I'd want to know before running it.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href={PLANNER_LINK} class="pill pill-primary">
+            Open this route in the Fuel Planner
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L11 7 M7 3 L11 7 L7 11" /></svg>
+          </a>
+          <a href={GPX_PATH} download="isle-of-wight-50k.gpx" class="pill pill-outline">Download the GPX</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 py-16" aria-label="The race in numbers">
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-5">
+        {
+          facts.map((f) => (
+            <div class="border-t border-ink pt-4">
+              <dt class="sr-only">{f.label}</dt>
+              <dd class="m-0">
+                <span class="block font-display text-[clamp(28px,3vw,36px)] leading-none text-ink">{f.value}</span>
+                <span class="mt-2 block text-[14px] leading-snug text-ink-mute">{f.label}</span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-16" aria-labelledby="profile-heading">
+      <h2 id="profile-heading" class="section-heading">The shape of the day</h2>
+      <p class="section-lede">
+        Elevation along the route. The ochre marks are where I stopped and for how long. The high point
+        is {Math.round(highest.ele)} m, about {Math.round(highest.km)} km in.
+      </p>
+      <figure class="mt-8">
+        <svg viewBox={`0 0 ${W} ${H}`} class="h-auto w-full" role="img" aria-label="Elevation profile of the Isle of Wight 50 km route with stops marked">
+          <line x1="0" x2={W} y1={H - PAD.bottom} y2={H - PAD.bottom} stroke="#D9D3C8" stroke-width="1" />
+          <path d={area} fill="#111111" fill-opacity="0.06" />
+          <path d={line} fill="none" stroke="#111111" stroke-width="1.5" stroke-linejoin="round" />
+          {
+            stops.map((s) => (
+              <g>
+                <title>{`${s.where}, ${s.elapsed} in: stopped ${s.minutes} min`}</title>
+                <line x1={stopX(s.km)} x2={stopX(s.km)} y1={PAD.top} y2={H - PAD.bottom} stroke="#D15839" stroke-width="1" stroke-dasharray="3 3" stroke-opacity="0.6" />
+                <circle cx={stopX(s.km)} cy={PAD.top + 4} r={3 + s.minutes * 0.6} fill="#D15839" fill-opacity="0.85" />
+              </g>
+            ))
+          }
+          {
+            kmTicks.map((k) => (
+              <text x={stopX(k)} y={H - 8} font-size="12" fill="#8C877E" text-anchor={k === 0 ? "start" : "middle"} font-family="Inter, sans-serif">{k} km</text>
+            ))
+          }
+        </svg>
+        <figcaption class="mt-3 text-[13px] text-ink-faint">Circle size shows minutes stopped. Route recorded on the day; the downloadable file carries the course and elevation only.</figcaption>
+      </figure>
+    </section>
+
+    <section class="mx-auto grid max-w-6xl gap-16 px-6 pb-16 md:grid-cols-2">
+      <div>
+        <h2 class="section-heading">The ground</h2>
+        <div class="prose-th">
+          <p>
+            The climbing comes in short pieces rather than one big hill, and it never gets far above
+            the sea. I walked anything steeper than a few per cent, on purpose: about 110 minutes of
+            the day.
+          </p>
+          <p>
+            Most of the race is gentler ground, around four hours of it. That's where the day is won
+            or lost, and it's where a steady rhythm matters more than anything else.
+          </p>
+          <p>
+            The surprise was the downhills. I was slower going down than on the flat, which is free
+            time given away. If you're comfortable descending, this course will pay you for it.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h2 class="section-heading">Where the time went</h2>
+        <div class="prose-th">
+          <p>
+            Fifteen stops, 39 minutes, about a twelfth of the whole day. At my steady pace
+            that's about five kilometres of course: more than a training block would have bought me.
+          </p>
+          <p>
+            The longest was halfway, at ten and a half minutes. After 42 km, three more short stops
+            added another ten.
+          </p>
+          <p>
+            One thing I can't tell you yet: which of those stops were checkpoints and which were
+            gates, stiles or something else. I didn't write it down, and next time I will.
+          </p>
+        </div>
+        <table class="stops-table">
+          <caption class="sr-only">Stops longer than ninety seconds</caption>
+          <thead>
+            <tr><th scope="col">Where</th><th scope="col">Time in</th><th scope="col">Stopped</th></tr>
+          </thead>
+          <tbody>
+            {
+              stops.map((s) => (
+                <tr>
+                  <td>{s.where}</td>
+                  <td>{s.elapsed}</td>
+                  <td>{s.minutes} min</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-16" aria-labelledby="engine-heading">
+      <div class="rounded-2xl border border-rule p-8 md:p-10">
+        <h2 id="engine-heading" class="section-heading">The part that went right</h2>
+        <div class="prose-th max-w-[64ch]">
+          <p>
+            My heart rate sat around 150 for seven hours and didn't creep up as the day went on, and the
+            last hour was as efficient as the first. Nothing ran out. Durable and slow is the best
+            problem an ultra can hand you, because the slow part is the bit you can train.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-24" aria-labelledby="again-heading">
+      <h2 id="again-heading" class="section-heading">If I ran it again</h2>
+      <ol class="again-list">
+        <li><strong>Eat on the move.</strong> Decide before the start which stops are worth stopping for, and keep walking through the rest with food in hand.</li>
+        <li><strong>Walk the climbs with purpose.</strong> Hiking them was right. Hiking them strongly is where the next gains are.</li>
+        <li><strong>Practise going downhill.</strong> The cheapest time on this course, and I left it there.</li>
+        <li><strong>Note every stop.</strong> Checkpoint, gate or anything else. It's the only way to know which minutes were yours to win back.</li>
+      </ol>
+
+      <div class="cta-band">
+        <div>
+          <p class="font-display text-[24px] leading-tight text-ink">Plan your own fuelling for this route.</p>
+          <p class="mt-2 text-[15px] text-ink-mute">The Fuel Planner opens with the course already loaded. Add your fuel and it does the rest.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={PLANNER_LINK} class="pill pill-primary">Open in the Fuel Planner</a>
+          <a href={GPX_PATH} download="isle-of-wight-50k.gpx" class="pill pill-outline">Download the GPX</a>
+        </div>
+      </div>
+
+      <aside class="prototype-note" aria-label="Prototype notes">
+        <p class="font-display text-[16px] text-ink">Prototype: to confirm before publishing</p>
+        <ul>
+          <li>Organiser, official event name and the 2027 date.</li>
+          <li>Start and finish: place names, parking and postcode, and how people get back to the start.</li>
+          <li>Which stops were official checkpoints, and what they stocked.</li>
+          <li>One photograph from the course.</li>
+        </ul>
+      </aside>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 34px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .section-lede {
+    margin: 12px 0 0;
+    max-width: 64ch;
+    color: var(--color-ink-mute);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .prose-th {
+    margin-top: 16px;
+    color: var(--color-ink-mute);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .prose-th p {
+    margin: 0 0 14px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    line-height: 1;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .pill-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .pill-primary:hover,
+  .pill-primary:focus-visible {
+    background: var(--color-th-burnt-ochre);
+  }
+
+  .pill-outline {
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .pill-outline:hover,
+  .pill-outline:focus-visible {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .stops-table {
+    margin-top: 24px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stops-table th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--color-ink-faint);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 0 8px;
+    border-bottom: 1px solid var(--color-ink);
+  }
+
+  .stops-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-rule);
+    color: var(--color-ink);
+    vertical-align: top;
+  }
+
+  .again-list {
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: again;
+    display: grid;
+    gap: 16px;
+    max-width: 72ch;
+  }
+
+  .again-list li {
+    counter-increment: again;
+    position: relative;
+    padding-left: 44px;
+    color: var(--color-ink-mute);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .again-list li::before {
+    content: counter(again, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-family: var(--font-display);
+    color: var(--color-th-burnt-ochre);
+  }
+
+  .again-list strong {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .cta-band {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-top: 1px solid var(--color-ink);
+    border-bottom: 1px solid var(--color-rule);
+    padding: 32px 0;
+  }
+
+  .prototype-note {
+    margin-top: 48px;
+    border: 1px dashed var(--color-th-burnt-ochre);
+    border-radius: 16px;
+    padding: 20px 24px;
+    color: var(--color-ink-mute);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .prototype-note ul {
+    margin: 8px 0 0;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+</style>
