@@ -3,11 +3,19 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
+
+const UNLISTED = ['/lab-privacy', '/tools/fuel-planner/results', '/tools/fuel-planner/print'];
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://trailhustle.com',
-  integrations: [sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) => !UNLISTED.some((path) => new URL(page).pathname.replace(/\/$/, '') === path),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()]
   }

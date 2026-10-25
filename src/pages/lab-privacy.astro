@@ -1,0 +1,121 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Unlisted: noindex, kept out of the sitemap (astro.config.mjs) and not linked from anywhere. Registered with WHOOP.
+---
+
+<Layout title="THE LAB - Privacy" description="Privacy notice for THE LAB." variant="tool" noindex>
+  <main class="lab mx-auto max-w-2xl px-6 py-20">
+    <h1>THE LAB - Privacy</h1>
+    <p class="lab-updated">Last updated: 25 October 2026</p>
+
+    <section>
+      <p>
+        THE LAB is a personal performance-tracking tool used by one person, its owner, Ben Carrington.
+        It is not a public service, and there are no other users or accounts.
+      </p>
+    </section>
+
+    <section>
+      <h2>What it reads</h2>
+      <p>
+        With the owner's explicit permission, through WHOOP's developer API, it reads the owner's own
+        recovery, sleep, daily strain, workout, profile and body-measurement data. It may also read the
+        owner's own training data from other services the owner connects (for example Strava and
+        Garmin).
+      </p>
+    </section>
+
+    <section>
+      <h2>Where it is stored</h2>
+      <p>
+        The data is stored in a database on the owner's own computer. The authorisation tokens that let
+        it read WHOOP data are also kept on that computer, in a file with restricted permissions, and
+        are never published or committed to source control.
+      </p>
+    </section>
+
+    <section>
+      <h2>Who can see it</h2>
+      <p>
+        Nobody else. For personal coaching analysis, the owner's data may be read by an AI assistant
+        (Claude, from Anthropic) in sessions the owner starts, under the owner's own account. The data
+        is not sold, shared with advertisers or used for marketing.
+      </p>
+    </section>
+
+    <section>
+      <h2>Analytics</h2>
+      <p>
+        THE LAB has no analytics or tracking. This web page is served from trailhustle.com, whose own
+        analytics are described in the site's <a href="/legal#privacy">privacy policy</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>Control</h2>
+      <p>
+        The owner can revoke THE LAB's access at any time in the WHOOP app (connected apps settings),
+        and can delete the stored data by deleting the local database.
+      </p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p><a href="mailto:ben@trailhustle.com">ben@trailhustle.com</a></p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .lab {
+    color: var(--color-ink-mute);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .lab h1 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1;
+    color: var(--color-ink);
+    margin: 0 0 8px;
+  }
+
+  .lab-updated {
+    font-size: 14px;
+    margin: 0 0 48px;
+  }
+
+  .lab section {
+    padding: 32px 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .lab section:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .lab h2 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    color: var(--color-ink);
+    margin: 0 0 10px;
+  }
+
+  .lab p {
+    margin: 0;
+  }
+
+  .lab a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 3px;
+  }
+
+  .lab a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+</style>

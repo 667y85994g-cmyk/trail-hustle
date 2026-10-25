@@ -35,7 +35,76 @@
   --color-paper-edge: #EBE6DE;
   --color-ink: #111111;
   --color-ink-mute: #5A5650;
+  --color-ink-faint: #8C877E;
   --color-rule: #D9D3C8;
+
+  /* Terrain ramp — mirror terrainColor() in src/fuel-planner/lib/utils.ts. Climbs warm, descents cool. */
+  --color-terrain-flat-runnable: #D8C49C;
+  --color-terrain-rolling: #CF9B5B;
+  --color-terrain-sustained-climb: #A0703A;
+  --color-terrain-steep-climb: #5E4023;
+  --color-terrain-runnable-descent: #8DB4BC;
+  --color-terrain-technical-descent: #007B91;
+  --color-terrain-recovery: #9DB09A;
+
+  --animate-fade-in: fade-in 0.3s ease-in-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  /* Tailwind v4 defaults border-color to currentColor; the planner expects hairline rules. */
+  .fuel-planner *,
+  .fuel-planner ::before,
+  .fuel-planner ::after {
+    border-color: var(--color-rule);
+  }
+
+  .fuel-planner button:not(:disabled),
+  .fuel-planner [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  .fuel-planner h1,
+  .fuel-planner h2,
+  .fuel-planner h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+}
+
+.fuel-planner .recharts-cartesian-grid-horizontal line,
+.fuel-planner .recharts-cartesian-grid-vertical line {
+  stroke: rgba(17, 17, 17, 0.06) !important;
+}
+
+.fuel-planner .recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-break {
+    page-break-before: always;
+  }
 }
 
 :root {

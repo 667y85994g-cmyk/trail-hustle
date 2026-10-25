@@ -1,0 +1,323 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ToolHeader from "../components/ToolHeader.astro";
+import Footer from "../components/Footer.astro";
+
+const LAST_UPDATED = "25 October 2026";
+
+const plannerInputs = [
+  "Athlete profile: bodyweight, experience level, carb and fluid targets, preferences",
+  "Prior race and training efforts: distance, time, elevation, notes",
+  "Route data: GPX file contents used to work out terrain and elevation",
+  "Fuel inventory: product names, nutritional values, quantities",
+  "Aid station details: locations and available supplies",
+  "Planner outputs: the generated fuelling schedule and carry plan",
+];
+
+const disclaimers = [
+  {
+    title: "Plans are estimates, not prescriptions",
+    body: "All fuelling plans are based on your inputs, assumed models and route data. They are starting points for planning, not exact instructions to follow without thought.",
+  },
+  {
+    title: "Test strategies in training first",
+    body: "Never rely on a fuelling approach in a race without testing it during training. Your gut, pace and preferences on race day may differ from what you expect.",
+  },
+  {
+    title: "Individual tolerance varies",
+    body: "Carbohydrate tolerance, fluid needs and electrolyte requirements vary significantly between athletes. What works for one runner may not work for another, even in identical conditions.",
+  },
+  {
+    title: "Conditions change needs",
+    body: "Weather, terrain, pace, fatigue and race-day stress can all shift your fuelling requirements away from any pre-planned values. Stay flexible and respond to how you actually feel.",
+  },
+  {
+    title: "Not a substitute for professional advice",
+    body: "This tool does not replace advice from a qualified sports nutritionist, dietitian or coach. If you have specific health conditions, dietary needs or performance goals, seek professional guidance.",
+  },
+  {
+    title: "Listen to your body",
+    body: "If a fuelling strategy is not working for you, causing nausea, GI distress or discomfort, stop or adjust, regardless of what any plan says. No plan is worth pushing through something that is clearly not working.",
+  },
+];
+---
+
+<Layout
+  title="Legal — Trail Hustle"
+  description="Privacy, terms of use and disclaimer for trailhustle.com and the Trail Hustle Fuel Planner."
+  variant="tool"
+>
+  <ToolHeader />
+  <main class="legal mx-auto max-w-3xl px-6 pb-28 pt-20">
+    <p class="text-[13px] uppercase tracking-[0.14em] text-ink-mute">Legal</p>
+    <h1 class="mt-4 font-display text-[clamp(40px,6vw,64px)] leading-[1.05] tracking-tight text-ink">
+      The small print<span class="text-th-burnt-ochre">.</span>
+    </h1>
+    <p class="mt-4 text-[14px] text-ink-mute">Last updated: {LAST_UPDATED}</p>
+
+    <nav aria-label="On this page" class="mt-10 flex flex-wrap gap-2">
+      <a href="#privacy" class="legal-chip">Privacy</a>
+      <a href="#terms" class="legal-chip">Terms of use</a>
+      <a href="#disclaimer" class="legal-chip">Fuel Planner disclaimer</a>
+    </nav>
+
+    <section id="privacy" class="legal-section">
+      <h2>Privacy</h2>
+      <p>
+        This covers trailhustle.com and the tools on it, including the Fuel Planner. We collect as
+        little as we can.
+      </p>
+
+      <h3>What you enter into the Fuel Planner</h3>
+      <p>The planner works with the following information as you go through its steps:</p>
+      <ul>
+        {plannerInputs.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h3>How planner data is stored</h3>
+      <p>
+        Your planner inputs and outputs are saved to your browser's local storage. The data stays on
+        your device, in your browser, and the planner does not send it to or save it on any server or
+        database.
+      </p>
+      <p>
+        Clearing your browser storage removes your saved plans. There is no cloud save or account
+        sync.
+      </p>
+
+      <h3>GPX files</h3>
+      <p>
+        When you add a GPX file, it is read in your browser to work out elevation and terrain. The
+        file is not uploaded to, or stored on, any server.
+      </p>
+
+      <h3>No accounts, no database</h3>
+      <p>
+        The site and its tools do not need an account. We do not collect your name, email address or
+        any identifying information, and there is no user database behind them.
+      </p>
+
+      <h3>Analytics and cookies</h3>
+      <p>
+        If you accept the cookie banner, we use Google Analytics 4 to see what lands: which pages are
+        visited, how far people scroll, which links are followed and how the Fuel Planner is used. IP
+        anonymisation is switched on, and no personally identifiable information or planner inputs are
+        included in these events. Google Analytics may set cookies in your browser.
+      </p>
+      <p>
+        If you decline, or ignore the banner, Google Analytics never loads. Your choice is remembered in
+        your browser's local storage; clear this site's data to be asked again. You can also block
+        analytics with the
+        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer"
+          >Google Analytics opt-out browser add-on</a
+        >.
+      </p>
+      <p>We do not use advertising networks or sell any data to third parties.</p>
+
+      <h3>Other services these pages load</h3>
+      <p>
+        Pages load the Inter typeface from Google Fonts. The Fuel Planner's map and race card load map
+        tiles from OpenStreetMap. Like any website, these services receive your IP address when your
+        browser requests them, under their own privacy policies.
+      </p>
+      <p>
+        Links to Substack, Instagram, Luma and WhatsApp take you to those services, which have their
+        own privacy policies.
+      </p>
+
+      <h3>Hosting</h3>
+      <p>
+        The site is hosted on Vercel and managed via GitHub. Normal server logging may happen at the
+        infrastructure level, for example IP addresses or request logs that hosting providers routinely
+        capture. These are governed by those providers' privacy policies.
+      </p>
+
+      <h3>Contact</h3>
+      <p>For privacy questions: <a href="mailto:ben@trailhustle.com">ben@trailhustle.com</a></p>
+    </section>
+
+    <section id="terms" class="legal-section">
+      <h2>Terms of use</h2>
+      <p class="legal-scope">These terms apply to the Fuel Planner.</p>
+
+      <h3>What this service is</h3>
+      <p>
+        The Fuel Planner is a free online tool that helps trail and ultra runners plan fuelling for
+        their races and long runs. It generates estimates based on the inputs you provide, including
+        past race data, GPX route files, fuel products and aid station locations.
+      </p>
+      <p>
+        It is an informational planning tool only. It is not a personalised coaching service, a
+        nutrition programme or a medical product.
+      </p>
+
+      <h3>No professional advice</h3>
+      <p>
+        Nothing in the Fuel Planner constitutes medical, nutritional, dietary, coaching or other
+        professional advice. The plans and recommendations it produces are general estimates based on
+        widely used training principles and the data you enter.
+      </p>
+      <p>
+        Use your own judgement when reviewing any output. If you have specific health conditions,
+        dietary requirements or concerns about race nutrition, consult a qualified professional before
+        acting on any guidance from this tool.
+      </p>
+
+      <h3>Use at your own risk</h3>
+      <p>
+        Fuelling plans produced by this tool are estimates. They are based on your inputs, assumed
+        pace models and route data. Actual race conditions, your tolerance on the day, weather, fatigue
+        and many other factors will influence what works for you.
+      </p>
+      <p>
+        You are responsible for testing any fuelling strategy in training before relying on it in a
+        race, and for the decisions you make on race day.
+      </p>
+
+      <h3>No guarantees</h3>
+      <p>
+        The Fuel Planner is provided as-is. We make no guarantees about the accuracy, completeness or
+        reliability of any plan it produces. We do not guarantee that the tool is fit for any
+        particular purpose, that it will be available without interruption, or that it is free from
+        errors.
+      </p>
+
+      <h3>Limitation of liability</h3>
+      <p>
+        To the fullest extent permitted by law, the providers of the Fuel Planner are not liable for
+        any injury, illness, loss, damage or other outcome arising from your use of this tool or any
+        plan it generates. This includes outcomes during training or racing.
+      </p>
+
+      <h3>Changes and availability</h3>
+      <p>
+        The Fuel Planner may be updated, changed, suspended or discontinued at any time without
+        notice. These terms may also be updated. Continued use of the tool after any changes
+        constitutes acceptance of the updated terms.
+      </p>
+
+      <h3>Contact</h3>
+      <p>For questions about these terms: <a href="mailto:ben@trailhustle.com">ben@trailhustle.com</a></p>
+    </section>
+
+    <section id="disclaimer" class="legal-section">
+      <h2>Fuel Planner disclaimer</h2>
+      <p>The Fuel Planner is a planning tool. The following points apply to any plan or guidance it produces.</p>
+      <ul class="legal-points">
+        {
+          disclaimers.map((d) => (
+            <li>
+              <h3>{d.title}</h3>
+              <p>{d.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--color-rule);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    color: var(--color-ink-mute);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .legal-chip:hover,
+  .legal-chip:focus-visible {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .legal-section {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--color-rule);
+    scroll-margin-top: 24px;
+    color: var(--color-ink-mute);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .legal-section h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin: 0 0 16px;
+  }
+
+  .legal-section h3 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    line-height: 1.3;
+    color: var(--color-ink);
+    margin: 32px 0 8px;
+  }
+
+  .legal-section p {
+    margin: 0 0 12px;
+    max-width: 66ch;
+  }
+
+  .legal-section a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-rule);
+    text-underline-offset: 3px;
+  }
+
+  .legal-section a:hover {
+    text-decoration-color: var(--color-ink);
+  }
+
+  .legal-section ul:not(.legal-points) {
+    margin: 0 0 12px;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+
+  .legal-section ul:not(.legal-points) li {
+    margin-bottom: 6px;
+  }
+
+  .legal-section ul:not(.legal-points) li::marker {
+    color: var(--color-th-burnt-ochre);
+  }
+
+  .legal-scope {
+    font-size: 14px;
+  }
+
+  .legal-points {
+    display: grid;
+    gap: 12px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .legal-points li {
+    border: 1px solid var(--color-rule);
+    border-radius: 16px;
+    padding: 20px 24px;
+  }
+
+  .legal-points h3 {
+    margin-top: 0;
+    font-size: 17px;
+  }
+
+  .legal-points p {
+    margin: 0;
+    font-size: 15px;
+  }
+</style>

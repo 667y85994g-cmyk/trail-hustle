@@ -1,0 +1,63 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ToolHeader from "../../components/ToolHeader.astro";
+import Footer from "../../components/Footer.astro";
+import Topography from "../../components/Topography.astro";
+---
+
+<Layout
+  title="Planning & Tools — Trail Hustle"
+  description="Planning tools from Trail Hustle. Free, no account needed, and your data stays in your browser."
+  variant="tool"
+>
+  <ToolHeader current="tools" />
+  <main>
+    <section class="mx-auto max-w-6xl px-6 pb-16 pt-20 sm:pt-28">
+      <p class="text-[13px] uppercase tracking-[0.14em] text-ink-mute">Planning &amp; Tools</p>
+      <h1 class="mt-4 max-w-[18ch] font-display text-[clamp(40px,6vw,76px)] leading-[1.04] tracking-tight text-ink">
+        Tools to help you train, fuel, and recover<span class="text-th-burnt-ochre">.</span>
+      </h1>
+      <p class="mt-6 max-w-[52ch] text-[18px] leading-relaxed text-ink-mute">
+        Free, no account needed. Whatever you put in stays in your browser.
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-28" aria-label="Available tools">
+      <ul class="grid gap-6 md:grid-cols-2">
+        <li>
+          <a
+            href="/tools/fuel-planner"
+            class="tool-card group relative flex h-full flex-col overflow-hidden rounded-2xl border border-rule bg-paper p-8 transition-colors hover:border-ink"
+          >
+            <div class="tool-card-topo pointer-events-none absolute inset-x-0 bottom-0 h-40" aria-hidden="true">
+              <Topography stroke="#D9D3C8" opacity={0.9} preserveAspectRatio="xMidYMax slice" class="h-full w-full" />
+            </div>
+            <div class="relative">
+              <p class="text-[13px] uppercase tracking-[0.14em] text-ink-mute">Race day</p>
+              <h2 class="mt-3 font-display text-[32px] leading-[1.1] tracking-tight text-ink">
+                Fuel Planner<span class="text-th-burnt-ochre">.</span>
+              </h2>
+              <p class="mt-4 max-w-[40ch] text-[16px] leading-relaxed text-ink-mute">
+                Plan your fuelling for the route you're actually running. Upload a GPX, add the fuel you
+                carry and your aid stations, and get a terrain-aware plan for race day.
+              </p>
+            </div>
+            <span class="relative mt-10 inline-flex items-center gap-2 self-start rounded-full bg-ink px-6 py-3 font-display text-[15px] text-paper transition-colors group-hover:bg-th-burnt-ochre">
+              Open the Fuel Planner
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 7 L11 7 M7 3 L11 7 L7 11" />
+              </svg>
+            </span>
+          </a>
+        </li>
+        <li
+          class="flex min-h-[280px] flex-col justify-end rounded-2xl border border-dashed border-rule p-8"
+          aria-label="More tools to come"
+        >
+          <p class="font-display text-[20px] text-ink-faint">More to come.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</Layout>

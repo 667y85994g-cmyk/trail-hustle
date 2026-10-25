@@ -15,12 +15,17 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  noindex?: boolean;
+  /** "tool" pages skip the smooth-scroll and the animated ground topography. */
+  variant?: "site" | "tool";
 }
 
 const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   ogImage = "/og-image.png",
+  noindex = false,
+  variant = "site",
 } = Astro.props;
 
 const siteOrigin = Astro.site?.toString() ?? SITE_URL;
@@ -54,7 +59,10 @@ const websiteSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index,follow,max-image-preview:large"}
+    />
     <meta name="theme-color" content="#F7F5F1" />
     {gscVerification && (
       <meta name="google-site-verification" content={gscVerification} />
@@ -98,18 +106,20 @@ const websiteSchema = {
     />
   </head>
   <body class="bg-paper text-ink font-body antialiased leading-[1.55]">
-    <GroundTopography />
+    {variant === "site" && <GroundTopography />}
     <div class="relative z-10">
       <slot />
     </div>
     <Consent />
     <Analytics />
 
-    <script>
-      import { initScroll } from "../scripts/scroll";
-      import { initGround } from "../scripts/ground";
-      initScroll();
-      initGround();
-    </script>
+    {variant === "site" && (
+      <script>
+        import { initScroll } from "../scripts/scroll";
+        import { initGround } from "../scripts/ground";
+        initScroll();
+        initGround();
+      </script>
+    )}
   </body>
 </html>
