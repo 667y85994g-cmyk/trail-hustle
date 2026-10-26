@@ -62,40 +62,6 @@ const figures = [
       </div>
     </section>
 
-    <section class="mx-auto max-w-5xl px-6 py-20 sm:py-28" aria-label="In Ben's words">
-      <blockquote class="pull">
-        <p>The fuelling expertise only started after the 2025 DNF. I learn from my mistakes.</p>
-      </blockquote>
-    </section>
-
-    <section class="carried border-y border-rule" aria-labelledby="changed-heading">
-      <div class="mx-auto grid max-w-5xl gap-12 px-6 py-20 md:grid-cols-[1.2fr_1fr] md:items-end">
-        <div>
-          <h2 id="changed-heading" class="section-heading">What changed in three weeks</h2>
-          <div class="prose-th mt-6 max-w-[56ch]">
-            <p>
-              Not my legs. Three weeks doesn't build fitness. What changed was the fuelling: something
-              every few hundred calories, 25 to 40 grams of carbohydrate at a time, whether I felt like
-              it or not.
-            </p>
-            <p>
-              No sweat test. I went by feel, and it's worked so far. The Fuel Planner came out of those
-              three weeks.
-            </p>
-          </div>
-        </div>
-        <div>
-          <p class="font-display text-[22px] leading-snug text-ink">Plan yours the same way.</p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href={PLANNER_LINK} class="pill pill-primary">
-              Plan your fuelling
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L11 7 M7 3 L11 7 L7 11" /></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="mx-auto max-w-5xl px-6 py-20" aria-labelledby="day-heading">
       <h2 id="day-heading" class="section-heading">The day, in four parts</h2>
       <figure class="mt-10">
@@ -153,8 +119,8 @@ const figures = [
             wasn't out of fuel. I was tired in a way food doesn't fix.
           </p>
           <p class="gap-note">
-            For Ben: what the night was like, in your words. Where you were, what you could see or
-            hear, who was near you.
+            For Ben: the Ridgeway at eleven at night, in your words. The ground, the light, and who else
+            was still out there.
           </p>
         </li>
         <li>
@@ -185,22 +151,50 @@ const figures = [
       </dl>
     </section>
 
-    <section class="mx-auto max-w-5xl px-6 pb-20" aria-labelledby="going-heading">
+    <section class="carried border-y border-rule" aria-labelledby="changed-heading">
+      <div class="mx-auto grid max-w-5xl gap-12 px-6 py-20 md:grid-cols-[1.2fr_1fr] md:items-end">
+        <div>
+          <h2 id="changed-heading" class="section-heading">What changed in three weeks</h2>
+          <div class="prose-th mt-6 max-w-[56ch]">
+            <p>
+              Not my legs. Three weeks doesn't build fitness. What changed was the fuelling: something
+              every few hundred calories, 25 to 40 grams of carbohydrate at a time, whether I felt like
+              it or not.
+            </p>
+            <p>
+              No sweat test. I went by feel, and it's worked so far. The Fuel Planner came out of those
+              three weeks.
+            </p>
+          </div>
+        </div>
+        <div>
+          <p class="font-display text-[22px] leading-snug text-ink">The planner I built from it is free to use.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={PLANNER_LINK} class="pill pill-primary">
+              Plan your fuelling
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L11 7 M7 3 L11 7 L7 11" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-6 py-20" aria-labelledby="going-heading">
       <h2 id="going-heading" class="section-heading">If you're going</h2>
       <div class="mt-8 grid gap-12 md:grid-cols-2">
         <div class="prose-th">
           <h3>The first 26 km decide the night</h3>
           <p>
-            Start slower than feels sensible, especially if it's hot. Everything I paid for after dark,
-            I bought before lunch.
+            Start slower than feels sensible, especially if it's hot. The morning feels easy, and that's
+            the trap.
           </p>
         </div>
         <div class="prose-th">
           <h3>Eat on a clock</h3>
           <p>
             Not when you're hungry. By the time you are, you're behind. I stopped at seven checkpoints
-            and stood still for about two hours in all, and the eating on the move is what kept the
-            engine going between them.
+            and stood still for about two hours in all. Eating on the move is what got me from one to
+            the next.
           </p>
         </div>
       </div>
@@ -212,10 +206,7 @@ const figures = [
       </div>
       <div class="relative mx-auto max-w-5xl px-6 py-24">
         <p class="closing-line">
-          Tonight, write down what actually went wrong at your last bad race. One paragraph<span class="text-th-burnt-ochre">.</span>
-        </p>
-        <p class="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-ink-mute">
-          A DNF isn't a verdict on you. It's the most useful data you'll get all year.
+          Everything I paid for after dark, I bought before lunch<span class="text-th-burnt-ochre">.</span>
         </p>
         <div class="mt-10 flex flex-wrap gap-3">
           <a href={PLANNER_LINK} class="pill pill-primary">Plan your fuelling</a>
