@@ -5,7 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 
-const UNLISTED = ['/lab-privacy', '/tools/fuel-planner/results', '/tools/fuel-planner/print'];
+const UNLISTED = [
+  '/lab-privacy',
+  '/tools/fuel-planner/results',
+  '/tools/fuel-planner/print',
+  // Prototype, unlisted until approved.
+  '/tools/race-playbooks/race-to-the-stones',
+];
 
 // https://astro.build/config
 export default defineConfig({

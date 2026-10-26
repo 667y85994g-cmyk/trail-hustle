@@ -1,0 +1,420 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ToolHeader from "../../../components/ToolHeader.astro";
+import Footer from "../../../components/Footer.astro";
+import Topography from "../../../components/Topography.astro";
+import data from "../../../data/playbooks/race-to-the-stones.json";
+
+// No GPS file yet, so the planner opens without a preloaded course.
+const PLANNER_LINK = "/tools/fuel-planner";
+
+const profile = data.profile as { km: number; ele: number }[];
+const totalKm = profile[profile.length - 1].km;
+const minEle = Math.min(...profile.map((p) => p.ele));
+const maxEle = Math.max(...profile.map((p) => p.ele));
+
+const W = 1000;
+const H = 240;
+const PAD = { top: 44, bottom: 28 };
+const x = (km: number) => (km / totalKm) * W;
+const y = (ele: number) => PAD.top + (1 - (ele - minEle) / (maxEle - minEle)) * (H - PAD.top - PAD.bottom);
+const line = profile.map((p, i) => `${i ? "L" : "M"}${x(p.km).toFixed(1)},${y(p.ele).toFixed(1)}`).join(" ");
+const area = `${line} L${W},${H - PAD.bottom} L0,${H - PAD.bottom} Z`;
+
+const acts = [
+  { from: 0, to: 26, label: "Too hot, too early" },
+  { from: 26, to: 60, label: "The long fade" },
+  { from: 83, to: 93, label: "The night" },
+  { from: 93, to: totalKm, label: "Home" },
+];
+const kmTicks = [0, 20, 40, 60, 80, 100];
+
+const figures = [
+  { value: "101.6 km", label: "Chinnor to Avebury" },
+  { value: "1,350 m", label: "of climbing" },
+  { value: "17 h 51", label: "start to finish" },
+  { value: "26°C", label: "dry, light wind" },
+];
+---
+
+<Layout
+  title="Race to the Stones — Race playbook — Trail Hustle"
+  description="A hundred kilometres along the Ridgeway, three weeks after a DNF. What went wrong in June, what changed, and the day itself, in four parts."
+  variant="tool"
+  noindex
+>
+  <ToolHeader current="tools" />
+  <main>
+    <section class="relative overflow-hidden">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Topography stroke="#D9D3C8" opacity={0.6} preserveAspectRatio="xMidYMid slice" class="h-full w-full" />
+      </div>
+      <div class="relative mx-auto max-w-5xl px-6 pb-24 pt-24 sm:pt-32">
+        <p class="eyebrow">Race playbook · Race to the Stones · 12 July 2025</p>
+        <h1 class="mt-5 font-display text-[clamp(48px,8vw,104px)] leading-[0.98] tracking-tight text-ink">
+          Twenty-one days<span class="text-th-burnt-ochre">.</span>
+        </h1>
+        <p class="lede mt-8">
+          In June I pulled out of a 50 km at thirty kilometres. I'd gone off too hard and run out of
+          fuel. Three weeks later I stood at the start of the Race to the Stones: a hundred kilometres
+          along the Ridgeway, from Chinnor to the stones at Avebury.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-6 py-20 sm:py-28" aria-label="In Ben's words">
+      <blockquote class="pull">
+        <p>The fuelling expertise only started after the 2025 DNF. I learn from my mistakes.</p>
+      </blockquote>
+    </section>
+
+    <section class="carried border-y border-rule" aria-labelledby="changed-heading">
+      <div class="mx-auto grid max-w-5xl gap-12 px-6 py-20 md:grid-cols-[1.2fr_1fr] md:items-end">
+        <div>
+          <h2 id="changed-heading" class="section-heading">What changed in three weeks</h2>
+          <div class="prose-th mt-6 max-w-[56ch]">
+            <p>
+              Not my legs. Three weeks doesn't build fitness. What changed was the fuelling: something
+              every few hundred calories, 25 to 40 grams of carbohydrate at a time, whether I felt like
+              it or not.
+            </p>
+            <p>
+              No sweat test. I went by feel, and it's worked so far. The Fuel Planner came out of those
+              three weeks.
+            </p>
+          </div>
+        </div>
+        <div>
+          <p class="font-display text-[22px] leading-snug text-ink">Plan yours the same way.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={PLANNER_LINK} class="pill pill-primary">
+              Plan your fuelling
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7 L11 7 M7 3 L11 7 L7 11" /></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-6 py-20" aria-labelledby="day-heading">
+      <h2 id="day-heading" class="section-heading">The day, in four parts</h2>
+      <figure class="mt-10">
+        <svg viewBox={`0 0 ${W} ${H}`} class="h-auto w-full" role="img" aria-label="The shape of the route, with the four parts of the day and the checkpoints marked">
+          {
+            acts.map((a) => (
+              <g>
+                <rect x={x(a.from)} y={PAD.top - 8} width={x(a.to) - x(a.from)} height={H - PAD.bottom - PAD.top + 8} fill="#111111" fill-opacity="0.035" />
+                <text x={x(a.from) + 6} y={PAD.top - 16} font-size="12" fill="#5A5650" font-family="Inter, sans-serif">{a.label}</text>
+              </g>
+            ))
+          }
+          <line x1="0" x2={W} y1={H - PAD.bottom} y2={H - PAD.bottom} stroke="#D9D3C8" stroke-width="1" />
+          <path d={area} fill="#111111" fill-opacity="0.05" />
+          <path d={line} fill="none" stroke="#111111" stroke-width="1.5" stroke-linejoin="round" />
+          {
+            data.checkpointKm.map((km) => (
+              <g>
+                <title>{`Checkpoint, around ${km} km`}</title>
+                <circle cx={x(km - 0.5)} cy={H - PAD.bottom} r="5" fill="#D15839" />
+              </g>
+            ))
+          }
+          {
+            kmTicks.map((k) => (
+              <text x={x(k)} y={H - 8} font-size="12" fill="#8C877E" text-anchor={k === 0 ? "start" : k === 100 ? "end" : "middle"} font-family="Inter, sans-serif">{k} km</text>
+            ))
+          }
+        </svg>
+        <figcaption class="mt-3 text-[13px] text-ink-faint">
+          The shape of the Ridgeway, drawn from the average gradient of each kilometre, so smaller rises
+          are smoothed out. Orange dots are checkpoints.
+        </figcaption>
+      </figure>
+
+      <ol class="acts">
+        <li>
+          <h3>Too hot, too early <span>0–26 km</span></h3>
+          <p>
+            I made the same mistake as in June: the first 26 km far too hard, on a 26-degree day with 75
+            kilometres still to come. The difference was that this time I kept eating.
+          </p>
+        </li>
+        <li>
+          <h3>The long fade <span>26–60 km</span></h3>
+          <p>
+            The legs paid for the morning. I slowed, the checkpoint stops got longer, and one kilometre
+            around 43 km took twenty-seven minutes. I kept moving.
+          </p>
+        </li>
+        <li>
+          <h3>The night <span>84–93 km</span></h3>
+          <p>
+            By eleven it was dark. Ten kilometres at walking pace, close to thirteen minutes each. I
+            wasn't out of fuel. I was tired in a way food doesn't fix.
+          </p>
+          <p class="gap-note">
+            For Ben: what the night was like, in your words. Where you were, what you could see or
+            hear, who was near you.
+          </p>
+        </li>
+        <li>
+          <h3>Home <span>94–101.6 km</span></h3>
+          <p>
+            And then, after fifteen hours, something came back. I ran the last eight kilometres faster
+            than the ten before them, into Avebury, and finished at nineteen minutes past two in the
+            morning.
+          </p>
+          <p class="gap-note">
+            For Ben: the stones at the finish. What you remember of arriving.
+          </p>
+        </li>
+      </ol>
+
+      <dl class="figures">
+        {
+          figures.map((f) => (
+            <div>
+              <dt class="sr-only">{f.label}</dt>
+              <dd>
+                <span class="figure-value">{f.value}</span>
+                <span class="figure-label">{f.label}</span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-6 pb-20" aria-labelledby="going-heading">
+      <h2 id="going-heading" class="section-heading">If you're going</h2>
+      <div class="mt-8 grid gap-12 md:grid-cols-2">
+        <div class="prose-th">
+          <h3>The first 26 km decide the night</h3>
+          <p>
+            Start slower than feels sensible, especially if it's hot. Everything I paid for after dark,
+            I bought before lunch.
+          </p>
+        </div>
+        <div class="prose-th">
+          <h3>Eat on a clock</h3>
+          <p>
+            Not when you're hungry. By the time you are, you're behind. I stopped at seven checkpoints
+            and stood still for about two hours in all, and the eating on the move is what kept the
+            engine going between them.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="relative overflow-hidden border-t border-rule">
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Topography stroke="#D9D3C8" opacity={0.45} preserveAspectRatio="xMidYMid slice" class="h-full w-full" />
+      </div>
+      <div class="relative mx-auto max-w-5xl px-6 py-24">
+        <p class="closing-line">
+          Tonight, write down what actually went wrong at your last bad race. One paragraph<span class="text-th-burnt-ochre">.</span>
+        </p>
+        <p class="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-ink-mute">
+          A DNF isn't a verdict on you. It's the most useful data you'll get all year.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href={PLANNER_LINK} class="pill pill-primary">Plan your fuelling</a>
+        </div>
+
+        <aside class="prototype-note" aria-label="Prototype notes">
+          <p class="font-display text-[16px] text-ink">Prototype: to confirm before publishing</p>
+          <ul>
+            <li>Your words for the night section and the finish at the stones, above.</li>
+            <li>The GPS file, as with the Isle of Wight, so the planner opens with the course loaded and the route can be downloaded.</li>
+            <li>The 2026 date, and whether the course or checkpoints have changed.</li>
+            <li>One photograph from the Ridgeway.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .eyebrow {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-ink-mute);
+    margin: 0;
+  }
+
+  .lede {
+    max-width: 54ch;
+    font-size: clamp(18px, 1.6vw, 21px);
+    line-height: 1.6;
+    color: var(--color-ink-mute);
+  }
+
+  .pull {
+    margin: 0 auto;
+    max-width: 24ch;
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 50px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    text-align: center;
+  }
+
+  .pull p {
+    margin: 0;
+  }
+
+  .carried {
+    background: var(--color-paper-edge);
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .prose-th {
+    color: var(--color-ink-mute);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .prose-th p {
+    margin: 0 0 14px;
+  }
+
+  .prose-th h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--color-ink);
+    margin: 0 0 10px;
+  }
+
+  .acts {
+    margin: 48px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 36px;
+    max-width: 64ch;
+  }
+
+  .acts h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--color-ink);
+    margin: 0 0 8px;
+  }
+
+  .acts h3 span {
+    margin-left: 10px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-ink-faint);
+  }
+
+  .acts p {
+    margin: 0 0 12px;
+    color: var(--color-ink-mute);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .gap-note {
+    border: 1px dashed var(--color-th-burnt-ochre);
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-size: 15px !important;
+    color: var(--color-th-clay-red) !important;
+  }
+
+  .figures {
+    margin: 48px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .figures {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .figures dd {
+    margin: 0;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 12px;
+  }
+
+  .figure-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--color-ink);
+  }
+
+  .figure-label {
+    display: block;
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--color-ink-faint);
+  }
+
+  .closing-line {
+    margin: 0;
+    max-width: 24ch;
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    line-height: 1;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .pill-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .pill-primary:hover,
+  .pill-primary:focus-visible {
+    background: var(--color-th-burnt-ochre);
+  }
+
+  .prototype-note {
+    margin-top: 64px;
+    max-width: 60ch;
+    border: 1px dashed var(--color-th-burnt-ochre);
+    border-radius: 16px;
+    padding: 20px 24px;
+    background: var(--color-paper);
+    color: var(--color-ink-mute);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .prototype-note ul {
+    margin: 8px 0 0;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+</style>
